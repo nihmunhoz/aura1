@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura - Grupo de Desenvolvimento</title>
-    <!-- Link para a fonte Inter do Google Fonts (alternativa à Agrandir Medium devido a licenciamento) -->
+    <!-- Link para a fonte Inter do Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset básico para garantir consistência entre navegadores */
@@ -18,7 +18,8 @@
         :root {
             --color-primary-dark: #1a1a1a; /* Preto quase puro, usado para backgrounds e texto principal */
             --color-accent-magenta: #e800a0; /* Magenta vibrante, extraído do logo, para destaques */
-            --color-light-gray: #f5f5f5; /* Cinza claro para fundos de seções e cards */
+            --color-light-gray: #f5f5f5; /* Cinza claro para fundos de cards, se necessário */
+            --color-site-background: #ffffff; /* Cor de fundo principal do site: branco */
             --color-text-light: #ffffff; /* Texto branco para fundos escuros */
             --color-text-dark: #333333; /* Texto escuro para fundos claros */
             --color-border: #e0e0e0; /* Cor suave para bordas, se necessário */
@@ -30,12 +31,12 @@
             --spacing-xl: 3rem; /* Espaçamento extra grande */
         }
 
-        /* Estilos base do corpo da página */
+        /* Estilos base do corpo da página - com nova cor de fundo */
         body {
             font-family: var(--font-family-primary);
             line-height: 1.6; /* Altura da linha para melhor legibilidade */
             color: var(--color-text-dark); /* Cor padrão do texto */
-            background-color: var(--color-light-gray); /* Cor de fundo principal da página */
+            background-color: var(--color-site-background); /* Nova cor de fundo principal: branco */
             overflow-x: hidden; /* Evita rolagem horizontal indesejada */
         }
 
@@ -46,7 +47,7 @@
             background-color: var(--color-text-light); /* Fundo branco para as seções */
             margin-bottom: var(--spacing-sm); /* Margem inferior entre as seções */
             border-radius: 1rem; /* Cantos arredondados para um visual moderno */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave para profundidade */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidade */
             max-width: 1200px; /* Largura máxima para centralizar o conteúdo */
             margin-left: auto; /* Centraliza a seção */
             margin-right: auto; /* Centraliza a seção */
@@ -136,11 +137,14 @@
             font-weight: 600; /* Seminegrito */
             padding: 0.5rem 1rem; /* Preenchimento para tornar os links clicáveis */
             border-radius: 0.5rem; /* Cantos arredondados nos links */
-            transition: background-color 0.3s ease; /* Transição suave no hover */
+            /* Transição apenas para cor e transform */
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .header nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente no hover */
+            background-color: transparent; /* Remove o fundo semitransparente no hover */
+            color: var(--color-accent-magenta); /* Muda a cor do texto para magenta vibrante */
+            transform: scale(1.07); /* Efeito de zoom na palavra */
         }
 
         /* Media query para header em telas maiores */
@@ -162,7 +166,24 @@
             }
         }
 
-        /* Seção Hero */
+        /* Animação de entrada para elementos */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-load {
+            opacity: 0; /* Esconde o elemento inicialmente */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Aplica a animação */
+        }
+
+        /* Seção Hero - Boas-vindas e descrição do projeto Aura */
         .hero {
             /* Gradiente de fundo com cores do tema */
             background: linear-gradient(135deg, var(--color-primary-dark) 0%, #333333 100%);
@@ -189,12 +210,14 @@
             font-size: 2.8rem;
             margin-bottom: var(--spacing-md);
             line-height: 1.2;
+            animation-delay: 0.2s; /* Atraso na animação */
         }
 
         .hero p {
             font-size: 1.1rem;
             margin-bottom: var(--spacing-lg);
             color: rgba(255, 255, 255, 0.8); /* Cor mais suave para o parágrafo */
+            animation-delay: 0.4s; /* Atraso na animação */
         }
 
         .hero .highlight {
@@ -231,7 +254,17 @@
             color: rgba(255, 255, 255, 0.9); /* Texto ligeiramente transparente */
         }
 
-        /* Seção de Alunos */
+        /* Seção de Alunos - Fundo branco */
+        #students {
+            background-color: var(--color-text-light); /* Fundo branco para esta seção */
+            color: var(--color-text-dark); /* Texto escuro para esta seção */
+            margin-top: var(--spacing-md);
+        }
+
+        #students h2 {
+            color: var(--color-primary-dark); /* Título escuro */
+        }
+
         .students-grid {
             display: grid;
             /* Grid responsivo: colunas com largura mínima de 140px, auto-ajustáveis */
@@ -244,7 +277,7 @@
             background-color: var(--color-light-gray); /* Fundo cinza claro */
             padding: var(--spacing-sm);
             border-radius: 0.75rem; /* Cantos arredondados */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais escura */
             transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições para hover */
             display: flex;
             flex-direction: column;
@@ -252,8 +285,8 @@
         }
 
         .student-card:hover {
-            transform: translateY(-5px); /* Efeito de elevação no hover */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px); /* Efeito de elevação mais pronunciado no hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra ainda mais escura no hover */
         }
 
         .student-card img {
@@ -268,65 +301,35 @@
         .student-card h3 {
             margin: 0;
             font-size: 1.2rem;
-            color: var(--color-primary-dark);
+            color: var(--color-primary-dark); /* Texto do nome continua escuro no card claro */
         }
 
         /* Seção de Projetos */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Uma coluna em mobile */
-            gap: var(--spacing-lg);
-            padding: var(--spacing-md) 0;
-        }
-
-        .project-card {
-            background-color: var(--color-light-gray);
-            padding: var(--spacing-md);
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            text-align: left; /* Alinhamento do texto para a esquerda */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .project-card h3 {
-            color: var(--color-accent-magenta);
-            font-size: 1.5rem;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .project-card p {
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .project-card a.button {
-            display: inline-block; /* Comporta-se como um bloco, mas aceita texto */
-            background-color: var(--color-primary-dark);
-            color: var(--color-text-light);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
+        .projects-message {
+            font-size: 1.2rem;
+            color: var(--color-primary-dark);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
             font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .project-card a.button:hover {
-            background-color: var(--color-accent-magenta);
-            transform: translateY(-2px); /* Efeito de elevação do botão */
+        /* A grade de projetos agora está oculta, pois não há projetos */
+        .projects-grid {
+            display: none; /* Oculta a grade de projetos quando não há projetos */
         }
 
-        /* Media query para projetos em telas maiores */
-        @media (min-width: 768px) {
-            .projects-grid {
-                /* Duas colunas ou mais em desktop, com largura mínima de 300px */
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
+        /* Seção de Contato - Fundo igual ao 'Sobre Nós' */
+        #contact {
+            background-color: var(--color-accent-magenta); /* Fundo magenta */
+            color: var(--color-text-light); /* Texto claro */
+            margin-top: var(--spacing-md);
         }
 
-        /* Seção de Contato */
+        #contact h2 {
+            color: var(--color-text-light); /* Título branco */
+        }
+
         .contact-info {
             display: flex;
             flex-direction: column; /* Itens empilhados em mobile */
@@ -340,16 +343,31 @@
             gap: var(--spacing-xs);
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--color-primary-dark);
+            color: var(--color-text-light); /* Cor do texto do contato alterada para branco */
         }
 
         .contact-item a {
-            color: var(--color-primary-dark); /* Cor do link no contato */
-            transition: color 0.3s ease;
+            color: var(--color-text-light); /* Cor do link no contato alterada para branco */
+            transition: color 0.3s ease, transform 0.2s ease; /* Transição para transform também */
         }
 
         .contact-item a:hover {
-            color: var(--color-accent-magenta); /* Destaque no hover */
+            color: var(--color-primary-dark); /* Destaque no hover para a cor preta */
+            transform: translateY(-3px); /* Efeito de leve elevação no hover */
+        }
+
+        /* Estilos para os ícones SVG */
+        .contact-item svg {
+            width: 24px; /* Tamanho do ícone */
+            height: 24px;
+            stroke: currentColor; /* Usa a cor do texto pai para o contorno */
+            stroke-width: 2; /* Espessura do contorno */
+            fill: none; /* Ícone vazado (sem preenchimento) */
+            transition: stroke 0.3s ease; /* Transição de cor no hover */
+        }
+
+        .contact-item a:hover svg {
+            stroke: var(--color-primary-dark); /* Altera a cor do ícone no hover do link para preto */
         }
 
         /* Footer (rodapé) */
@@ -385,13 +403,13 @@
     <!-- Seção Hero - Boas-vindas e descrição do projeto Aura -->
     <section id="hero" class="hero">
         <div class="hero-content">
-            <h1>Bem-vindo ao <span class="highlight">Projeto Aura</span></h1>
-            <p>Somos um grupo de <span class="highlight">mini desenvolvedores e grandes gênios</span>, com o objetivo de divulgar o aprendizado e apresentar nossos projetos inovadores. Explore o que construímos!</p>
+            <h1 class="animate-on-load">Bem-vindo ao <span class="highlight">Projeto Aura</span></h1>
+            <p class="animate-on-load" style="animation-delay: 0.4s;">Somos um grupo de <span class="highlight">mini desenvolvedores e grandes gênios</span>, com o objetivo de divulgar o aprendizado e apresentar nossos projetos inovadores. Explore o que construímos!</p>
         </div>
     </section>
 
     <!-- Seção Sobre Nós - Detalhes sobre o grupo -->
-    <section id="about-us" class="about-us">
+    <section id="about-us" class="about-us animate-on-load" style="animation-delay: 0.6s;">
         <h2>Sobre o Grupo Aura</h2>
         <p>No Projeto Aura, acreditamos que a inovação nasce do aprendizado contínuo e da colaboração. Somos um coletivo vibrante de jovens mentes curiosas, dedicadas a transformar ideias em realidade através da tecnologia. Cada projeto que desenvolvemos é uma demonstração do nosso compromisso com a excelência e o impacto positivo.</p>
     </section>
@@ -400,47 +418,47 @@
     <section id="students">
         <h2>Nossos Desenvolvedores</h2>
         <div class="students-grid">
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 0.7s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=LV" alt="Luiza Vera">
                 <h3>Luiza Vera</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 0.8s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=LV" alt="Luiza Venture">
                 <h3>Luiza Venture</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 0.9s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=JV" alt="Joao Vitor">
                 <h3>João Vitor</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.0s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=M" alt="Maria">
                 <h3>Maria</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.1s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=R" alt="Rafael">
                 <h3>Rafael</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.2s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=N" alt="Nicoly">
                 <h3>Nicoly</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.3s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=JA" alt="Joao Augusto">
                 <h3>João Augusto</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.4s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=G" alt="Gabriela">
                 <h3>Gabriela</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.5s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=GF" alt="Guilherme Fulano">
                 <h3>Guilherme Fulano</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.6s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=E" alt="Enzo">
                 <h3>Enzo</h3>
             </div>
-            <div class="student-card">
+            <div class="student-card animate-on-load" style="animation-delay: 1.7s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=AL" alt="Aluno 11">
                 <h3>Aluno 11</h3>
             </div>
@@ -448,49 +466,43 @@
     </section>
 
     <!-- Seção de Projetos - Destaque dos trabalhos desenvolvidos pelo grupo -->
-    <section id="projects">
+    <section id="projects" class="animate-on-load" style="animation-delay: 1.8s;">
         <h2>Nossos Projetos Inovadores</h2>
+        <p class="projects-message">Nossa galeria de projetos está sendo construída com criatividade e paixão! Em breve, você poderá explorar nossas inovações aqui.</p>
         <div class="projects-grid">
-            <div class="project-card">
-                <h3>Aura Connect</h3>
-                <p>Uma plataforma social inovadora desenvolvida para conectar comunidades locais, facilitando a troca de ideias e recursos. Desenvolvida com foco em acessibilidade e design intuitivo.</p>
-                <a href="https://github.com/projeto-aura/aura-connect" target="_blank" class="button">Ver Repositório</a>
-            </div>
-            <div class="project-card">
-                <h3>EcoTrack</h3>
-                <p>Aplicativo móvel que ajuda usuários a monitorar sua pegada de carbono diária, oferecendo dicas personalizadas para um estilo de vida mais sustentável. Integrado com APIs de dados ambientais.</p>
-                <a href="https://github.com/projeto-aura/ecotrack" target="_blank" class="button">Ver Repositório</a>
-            </div>
-            <div class="project-card">
-                <h3>GameLab AI</h3>
-                <p>Um ambiente de desenvolvimento de jogos com assistente de IA integrado, permitindo que criadores de todos os níveis desenvolvam experiências interativas de forma mais rápida e eficiente.</p>
-                <a href="https://github.com/projeto-aura/gamelab-ai" target="_blank" class="button">Ver Repositório</a>
-            </div>
-            <div class="project-card">
-                <h3>SmartAgro Dashboard</h3>
-                <p>Painel de controle web para monitoramento de fazendas inteligentes, exibindo dados de sensores (umidade, temperatura) para otimizar a produção agrícola.</p>
-                <a href="https://github.com/projeto-aura/smartagro-dashboard" target="_blank" class="button">Ver Repositório</a>
-            </div>
+            <!-- Projetos serão adicionados aqui futuramente -->
         </div>
     </section>
 
     <!-- Seção de Contato - Informações para contato com o grupo -->
-    <section id="contact">
+    <section id="contact" class="animate-on-load" style="animation-delay: 2.0s;">
         <h2>Fale Conosco</h2>
         <div class="contact-info">
             <div class="contact-item">
-                <span style="font-size: 1.5rem;">📞</span> <!-- Ícone de telefone (emoji) -->
-                <span>Telefone: <a href="tel:+5511999999999">+55 (11) 99999-9999</a></span>
+                <!-- Ícone de telefone em SVG -->
+                <a href="tel:+5511999999999">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.67-3.67A19.79 19.79 0 0 1 2 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <span>+55 (11) 99999-9999</span>
+                </a>
             </div>
             <div class="contact-item">
-                <span style="font-size: 1.5rem;">📸</span> <!-- Ícone de câmera (emoji para Instagram) -->
-                <span>Instagram: <a href="https://instagram.com/projeto_aura" target="_blank">@projeto_aura</a></span>
+                <!-- Ícone do Instagram em SVG -->
+                <a href="https://instagram.com/projeto_aura" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37a4 4 0 1 1-7.07 0 4 4 0 0 1 7.07 0z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    <span>@projeto_aura</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Rodapé da página -->
-    <footer class="footer">
+    <footer class="footer animate-on-load" style="animation-delay: 2.2s;">
         <p>&copy; 2025 Projeto Aura. Todos os direitos reservados.</p>
     </footer>
 
@@ -515,6 +527,17 @@
                 logoImg.alt = 'Logo Aura - Placeholder';
             };
         }
+
+        // Adiciona a classe de animação aos elementos quando a página carrega
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.animate-on-load').forEach(element => {
+                element.style.opacity = '0'; // Garante que o elemento esteja invisível antes da animação
+                element.style.transform = 'translateY(20px)'; // Garante que o elemento esteja na posição inicial para o slide-up
+                // Força o reflow para garantir que a animação comece do estado inicial
+                void element.offsetWidth;
+                element.style.animationPlayState = 'running'; // Inicia a animação
+            });
+        });
     </script>
 </body>
 </html>
