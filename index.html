@@ -203,6 +203,7 @@
         .hero-content {
             max-width: 800px; /* Largura máxima do conteúdo */
             padding: var(--spacing-md);
+            position: relative;
         }
 
         .hero h1 {
@@ -236,22 +237,144 @@
             }
         }
 
-        /* Seção Sobre Nós */
-        .about-us {
+        /* Estilos do Carrossel (dentro da seção "Sobre Nós") */
+        .carousel-container {
+            position: relative;
+            max-width: 90%; /* Aumenta a largura máxima para 90% do contêiner pai */
+            margin: var(--spacing-lg) auto; /* Centralização */
+            overflow: hidden; /* Esconde slides que estão fora da vista */
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para o carrossel */
+            background-color: var(--color-primary-dark); /* Fundo preto para o carrossel */
+            padding: var(--spacing-xl) var(--spacing-lg); /* Aumenta o padding para dar espaço */
+            height: 220px; /* Altura maior para o carrossel */
+            display: flex;
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+            color: var(--color-text-light); /* Texto branco para o carrossel no fundo preto */
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.8s ease-in-out; /* Transição suave para o slide */
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            flex-shrink: 0; /* Impede que os slides encolham */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.1rem; /* Mantido o tamanho padrão, pode ajustar se necessário */
+            padding: 0 var(--spacing-xl); /* Mais padding horizontal para afastar do botão */
+            opacity: 0; /* Inicialmente invisível para a animação */
+            transition: opacity 0.5s ease-in-out;
+            position: absolute; /* Para sobrepor os slides */
+            top: 0;
+            left: 0;
+        }
+        .carousel-slide p {
+            margin: 0; /* Remove a margem padrão do parágrafo dentro do slide */
+        }
+
+        .carousel-slide.active {
+            opacity: 1; /* Torna o slide ativo visível */
+            position: relative; /* Ajusta a posição do slide ativo */
+        }
+
+        /* Estilos para o texto destacado no carrossel */
+        .carousel-highlight {
+            color: var(--color-accent-magenta);
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(232, 0, 160, 0.5);
+        }
+
+        /* Botões de navegação do carrossel - menores e magenta */
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color-accent-magenta); /* Fundo magenta vibrante */
+            color: var(--color-text-light); /* Cor do ícone branca */
+            border: none;
+            width: 38px; /* Largura menor */
+            height: 38px; /* Altura menor */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem; /* Tamanho da fonte ajustado para caber */
+            border-radius: 50%; /* Botão circular */
+            z-index: 10; /* Garante que os botões fiquem acima dos slides */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .carousel-button:hover {
+            background-color: #c9008a; /* Um tom um pouco mais escuro de magenta no hover */
+            transform: translateY(-50%) scale(1.15); /* Zoom no hover mais pronunciado */
+        }
+
+        .carousel-button.prev {
+            left: 8px; /* Ajusta a posição lateral */
+        }
+
+        .carousel-button.next {
+            right: 8px; /* Ajusta a posição lateral */
+        }
+
+        /* Indicadores de ponto do carrossel */
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5); /* Branco semitransparente */
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            background-color: var(--color-text-light); /* Branco sólido quando ativo */
+            transform: scale(1.2); /* Zoom no dot ativo */
+        }
+
+        /* Media queries para o carrossel em telas maiores */
+        @media (min-width: 768px) {
+            .carousel-container {
+                max-width: 900px; /* Largura máxima maior em desktop */
+                height: 250px; /* Altura maior em desktop */
+            }
+            .carousel-slide {
+                font-size: 1.3rem; /* Aumenta a fonte */
+                padding: 0 var(--spacing-xl); /* Mais padding horizontal para afastar do botão */
+            }
+            .carousel-button {
+                width: 45px; /* Tamanho um pouco maior em desktop */
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Seção Sobre Nós (agora com o carrossel) */
+        #about-us {
             background-color: var(--color-accent-magenta); /* Fundo magenta */
             color: var(--color-text-light); /* Texto claro */
             margin-top: var(--spacing-md);
         }
 
-        .about-us h2 {
+        #about-us h2 {
             color: var(--color-text-light); /* Título branco */
-        }
-
-        .about-us p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
-            color: rgba(255, 255, 255, 0.9); /* Texto ligeiramente transparente */
         }
 
         /* Seção de Alunos - Fundo branco */
@@ -408,10 +531,39 @@
         </div>
     </section>
 
-    <!-- Seção Sobre Nós - Detalhes sobre o grupo -->
+    <!-- Seção Sobre Nós - Agora com o Carrossel de Slides -->
     <section id="about-us" class="about-us animate-on-load" style="animation-delay: 0.6s;">
         <h2>Sobre o Grupo Aura</h2>
-        <p>No Projeto Aura, acreditamos que a inovação nasce do aprendizado contínuo e da colaboração. Somos um coletivo vibrante de jovens mentes curiosas, dedicadas a transformar ideias em realidade através da tecnologia. Cada projeto que desenvolvemos é uma demonstração do nosso compromisso com a excelência e o impacto positivo.</p>
+        <!-- Carrossel de Slides -->
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide active">
+                    <p><span class="carousel-highlight">Aura: Onde a Criatividade Encontra a Tecnologia.</span></p>
+                </div>
+                <div class="carousel-slide">
+                    <p>Somos um grupo de 11 jovens talentos apaixonados por desenvolvimento.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>Nosso objetivo é transformar ideias inovadoras em projetos reais.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>Promovemos o aprendizado contínuo e a colaboração entre os membros.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>Descubra o futuro da tecnologia através dos olhos da Geração Aura.</p>
+                </div>
+            </div>
+            <button class="carousel-button prev">&#10094;</button>
+            <button class="carousel-button next">&#10095;</button>
+            <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+            </div>
+        </div>
+        <!-- Fim do Carrossel -->
     </section>
 
     <!-- Seção de Alunos - Apresenta os membros do grupo -->
@@ -452,7 +604,7 @@
             </div>
             <div class="student-card animate-on-load" style="animation-delay: 1.5s;">
                 <img src="https://placehold.co/100x100/e800a0/ffffff?text=GF" alt="Guilherme Fulano">
-                <h3>Guilherme Fulano</h3>
+                <h3>Guilherme</h3>
             </div>
             <div class="student-card animate-on-load" style="animation-delay: 1.6s;">
                 <img src="https://placehold.co/100x100/1a1a1a/e800a0?text=E" alt="Enzo">
@@ -482,7 +634,7 @@
                 <!-- Ícone de telefone em SVG -->
                 <a href="tel:+5511999999999">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.67-3.67A19.79 19.79 0 0 1 2 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.67-3.67A19.79 19.79 0 0 1 2 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7                       2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
                     <span>+55 (11) 99999-9999</span>
                 </a>
@@ -537,6 +689,85 @@
                 void element.offsetWidth;
                 element.style.animationPlayState = 'running'; // Inicia a animação
             });
+        });
+
+        // Lógica do Carrossel
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carouselSlides = document.querySelectorAll('.carousel-slide');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+
+        let currentSlide = 0;
+        const totalSlides = carouselSlides.length;
+        const slideIntervalTime = 4000; // Tempo em milissegundos para transição automática (4 segundos)
+        let slideInterval;
+
+        // Função para mostrar um slide específico
+        function showSlide(index) {
+            carouselSlides.forEach((slide, i) => {
+                slide.classList.remove('active'); // Remove a classe 'active' de todos os slides
+                carouselDots[i].classList.remove('active'); // Remove a classe 'active' de todos os pontos
+            });
+
+            carouselSlides[index].classList.add('active'); // Adiciona a classe 'active' ao slide atual
+            carouselDots[index].classList.add('active'); // Adiciona a classe 'active' ao ponto atual
+        }
+
+        // Função para ir para o próximo slide
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Função para ir para o slide anterior
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Função para iniciar a transição automática
+        function startAutoSlide() {
+            stopAutoSlide(); // Garante que não haja múltiplos intervalos rodando
+            slideInterval = setInterval(nextSlide, slideIntervalTime);
+        }
+
+        // Função para parar a transição automática
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // Event Listeners para os botões de navegação
+        nextButton.addEventListener('click', () => {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide(); // Reinicia o auto-slide após clique manual
+        });
+
+        prevButton.addEventListener('click', () => {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide(); // Reinicia o auto-slide após clique manual
+        });
+
+        // Event Listeners para os pontos de navegação
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                currentSlide = index;
+                showSlide(currentSlide);
+                startAutoSlide(); // Reinicia o auto-slide após clique manual
+            });
+        });
+
+        // Pausar o carrossel ao passar o mouse e retomar ao tirar
+        carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+        carouselContainer.addEventListener('mouseleave', startAutoSlide);
+
+        // Inicializa o carrossel ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentSlide); // Mostra o primeiro slide
+            startAutoSlide(); // Inicia a transição automática
         });
     </script>
 </body>
